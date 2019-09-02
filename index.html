@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript">
+		var height = 188;
+		var width = 190;
+		var long = 390;
+		var seam = 15;
+	</script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/calculate.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row bg-primary">
+			<div class="col-lg-6"><img src="img/Specialist-M-logo.png" alt="Specialist-M Logo" width="250"></div>
+			<div class="col-lg-6"><h1>Калькулятор обьема кирпича</h1></div>
+		</div>
+	</div>
+	<div class="container" id="container1">
+		<div class="row">
+			<div class="col-lg-6">
+				<h2 class="text-success">Введите значения в поля:</h2>
+				<form class="form" name="calculator">
+					<div class="form-group">
+						<label for="dlinna">Общая длинна стен</label>
+    					<input  type="text" class="form-control" id="dlinna" placeholder="Значение в сантиметрах">
+					</div>
+					<div class="form-group">
+						<label for="visota">Высота стен по углам</label>
+    					<input type="text" class="form-control" id="visota" placeholder="Значение в сантиметрах">
+					</div>
+					<div class="form-group">
+						<label for="kladka">Вид кладки</label>
+						<select class="form-control" id="kladka">
+							<option value="0">Выбрать кладку кирпича</option>
+							<option value="1">0,5 кирпича</option>
+							<option value="2">1 кирпич</option>
+							<option value="3">1,5 кирпича</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="shov">Толщина шва</label>
+						<select class="form-control" id="shov">
+							<option value="5">0,5 см.</option>
+							<option value="10">1 см.</option>
+							<option value="15">1,5 см.</option>
+							<option value="20">2 см.</option>
+							<option value="25">2,5 см.</option>
+							<option value="30">3 см.</option>
+						</select>
+					</div>
+					<div class="checkbox">
+					    <label>
+					        <input type="checkbox" value="" name="proem" id="proem">
+					        Учесть окна и двери
+				        </label>
+					</div>
+				</form>
+				
+			</div>
+			<div class="col-lg-6">
+				<img src="img/Specialist-M-logo.png" alt="Кладка кирпича" class="img-responsive" name="kladkaimg" id="kladkaimg">
+			</div>
+		</div>
+	</div>
+
+	<div class="container hidden" id="container2">
+		<div class="row">
+			<div class="col-lg-6">
+				<form class="form">
+					<div class="form-group">
+						<label for="oknoA">Высота окна <span class="text-danger">А</span></label>
+						<input type="text" class="form-control" id="oknoA" placeholder="Значение в сантиметрах">
+					</div>
+					<div class="form-group">
+						<label for="oknoB">Ширина окна <span class="text-danger">B</span></label>
+						<input type="text" class="form-control" id="oknoB" placeholder="Значение в сантиметрах">
+					</div>
+					<div class="form-group">
+						<label for="oknoCol">Количество окон</label>
+						<input type="text" class="form-control" id="oknoCol" placeholder="Значение штук">
+					</div>
+
+					<div class="form-group">
+						<label for="dorC">Высота двери <span class="text-danger">C</span></label>
+						<input type="text" class="form-control" id="dorC" placeholder="Значение в сантиметрах">
+					</div>
+					<div class="form-group">
+						<label for="dorD">Ширина двери <span class="text-danger">D</span></label>
+						<input type="text" class="form-control" id="dorD" placeholder="Значение в сантиметрах">
+					</div>
+					<div class="form-group">
+						<label for="dorCol">Количество дверей</label>
+						<input type="text" class="form-control" id="dorCol" placeholder="Значение штук">
+					</div>
+				</form>
+				<div class="form-group">
+					<button type="button" class="btn btn-primary btn-lg" id="rasschet">Считать</button>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<img src="img/w-h.jpg" alt="" class="img-responsive">
+			</div>
+		</div>
+	</div>
+
+	<div class="margin50"></div>
+
+	<div class="container hidden" id="container3">
+		<div class="row">
+			<ol>
+				<li class="text-danger" id="kladkaRes"></li>
+				<li class="text-danger" id="shovRes"></li>
+			</ol>
+			<table class="table table-striped">
+				<tbody>
+					<tr class="text-success">
+						<th>№</th>
+						<th>Параметр</th>
+						<th>Значение</th>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>Общее число квадратных метров</td>
+						<td id="N1"></td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>Двери и окна</td>
+						<td id="N2"></td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>Квадратных метров за вычетом проемов</td>
+						<td id="N3"></td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td>Кирпичей в квадратном метре</td>
+						<td id="N4"></td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td>Всего кирпичей</td>
+						<td id="N5"></td>
+					</tr>
+					<tr>
+						<td>6</td>
+						<td>Всего кубических метров</td>
+						<td id="N6"></td>
+					</tr>
+					<tr>
+						<td>7</td>
+						<td>Кирпичей в кубическом метре</td>
+						<td id="N7"></td>
+					</tr>
+					<tr>
+						<td>8</td>
+						<td>Всего поддонов</td>
+						<td id="N8"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			// Выбор кладки
+			$("#kladka").change(function(event) {
+				var selectNum = Number(event.target.value);
+				if(selectNum === 1) {
+					$("#kladkaimg").attr('src', 'img/05.jpg');
+					seam = 1;
+					$("#kladkaRes").html('Кладка в полкирпича');
+				} if(selectNum === 2) {
+					$("#kladkaimg").attr('src', 'img/1.jpg');
+					seam = 2;
+					$("#kladkaRes").html('Кладка в один кирпич');
+				} if(selectNum === 3) {
+					$("#kladkaimg").attr('src', 'img/15.jpg');
+					seam = 3;
+					$("#kladkaRes").html('Кладка в полтора кирпича');
+				} if(selectNum === 0) {
+					$("#kladkaimg").attr('src', 'Specialist-M-logo.png');
+					seam = 0;
+				}
+			});
+
+			$("#proem").change(function(event) {
+				if(event.delegateTarget.checked) {
+					$("#container2").removeClass('hidden');
+					$("#container2").addClass('show');
+				} else {
+					$("#container2").removeClass('show');
+					$("#container2").addClass('hidden');
+				}
+			});
+
+			// Клик по кнопке
+			$("#rasschet").click(function(event) {
+				// Переменные значений
+				var dlinna = document.getElementById("dlinna");
+				var visota = document.getElementById("visota");
+				var kladka = document.getElementById("kladka");
+				var shov = document.getElementById("shov");
+
+				$("#shovRes").html('Шов толщиной в ' + shov.value + ' мм.');
+
+				// Квадратура общая
+				var qudrate = calc.quadrature(width, height, long, Number(visota.value), Number(dlinna.value), Number(shov.value), Number(kladka.value));
+				$("#N1").html(qudrate.AllQuadrat+'<sup>2</sup>');
+
+				// Переменные проемов
+				var oknoPA = document.getElementById("oknoA");
+				var oknoPB = document.getElementById("oknoB");
+				var dverPA = document.getElementById("dorC");
+				var dverPB = document.getElementById("dorD");
+
+				var oknoCount = document.getElementById("oknoCol");
+				var dverCount = document.getElementById("dorCol");
+
+				// Квадратура окон
+				var qudratePO = calc.quadrature(width, height, long, Number(oknoPA.value), Number(oknoB.value), Number(shov.value), Number(kladka.value));
+				
+				// Общее число кирпичей окон
+				var qudratePOvalue = Number(qudratePO.counts) * Number(oknoCount.value);
+
+				// Квадратура дверей
+				var qudratePD = calc.quadrature(width, height, long, Number(dverPA.value), Number(dverPB.value), Number(shov.value), Number(kladka.value));
+				
+				// Квадратура окон и дверей общее
+				var n2valueO = Number(qudratePO.AllQuadrat) * Number(oknoCount.value);
+				var n2valueD = Number(qudratePD.AllQuadrat) * Number(dverCount.value);
+				var n2 = n2valueO + n2valueD;
+				$("#N2").html(n2.toFixed(2) + '<sup>2</sup>');
+
+				// Вычитаем квадратуру от общего (окна, двери)
+				var allQuadrat = Number(qudrate.AllQuadrat) - Number(n2);
+				$("#N3").html(allQuadrat.toFixed(2) + '<sup>2</sup>');
+
+				// Общее число кирпичей окон
+				var qudratePDvalue = Number(qudratePD.counts) * Number(dverCount.value);
+				var qudratePDvalue = Number(qudratePD.counts) * Number(dverCount.value);
+
+				// Кирпичи окон и дверей
+				var allPbric = Number(qudratePOvalue) + Number(qudratePDvalue);
+
+				// Результат кирпичей в кладке
+				var result = Number(qudrate.counts) - allPbric.toFixed(2);
+
+				// Кубатура
+				var cubature = calc.cubic(result, width, height, long);
+				
+				$("#N4").html(Number(qudrate.quadrat).toFixed(2) + ' шт.');
+				$("#N5").html(Number(result).toFixed(2) + ' шт.');
+				$("#N6").html(Number(cubature.col) + '<sup>3</sup>');
+				$("#N7").html(Number(cubature.cub) + ' шт.');
+				$("#N8").html(Number(cubature.col).toFixed(1) + ' шт.');
+
+				$("#container1").removeClass('show');
+				$("#container1").addClass('hidden');
+				
+				$("#container2").removeClass('show');
+				$("#container2").addClass('hidden');
+
+				$("#container3").removeClass('hidden');
+				$("#container3").addClass('show');
+			});
+		});
+	</script>
+</body>
+</html>
